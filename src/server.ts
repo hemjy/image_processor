@@ -35,18 +35,24 @@ import { requireAuth } from './routes/auth';
 
   //! END @TODO1
   app.get( "/filteredimage", requireAuth, async ( req, res ) => {
+    
+    try 
+    {
     const {image_url} = req.query;
     if(!image_url) return res.status(400).send("Image url is required");
     const image = await filterImageFromURL(image_url);
     if(!image) return res.status(404).send("Image not found");
-    
-    res.sendFile(image, async () =>
+
+      res.sendFile(image, async () =>
     {
       await deleteLocalFiles([image]);
     });
-    console.log(image);
-   
     
+    } catch (error) {
+      return res.status(500).send(`Internal server error error:${error}`);
+    }
+    
+   
   } );
   
   // Root Endpoint
