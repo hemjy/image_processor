@@ -44,7 +44,6 @@ import { requireAuth } from './routes/auth';
     {
       await deleteLocalFiles([image]);
     });
-    console.log(image);
    
     
   } );
