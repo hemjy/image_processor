@@ -40,12 +40,16 @@ import { requireAuth } from './routes/auth';
     const image = await filterImageFromURL(image_url);
     if(!image) return res.status(404).send("Image not found");
     
-    res.sendFile(image, async () =>
+    try {
+      res.sendFile(image, async () =>
     {
       await deleteLocalFiles([image]);
     });
-   
+    } catch (error) {
+      return res.status(500).send(`Internal server error error:${error}`);
+    }
     
+   
   } );
   
   // Root Endpoint
