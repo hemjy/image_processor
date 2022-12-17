@@ -1,0 +1,22 @@
+branch-defaults:
+  dev:
+    environment: image-processor-dev
+  main:
+    environment: image-processor-dev
+    group_suffix: null
+deploy:
+  artifact: ./www/Archive.zip
+global:
+  application_name: image_processor
+  branch: null
+  default_ec2_keyname: aws-eb
+  default_platform: Node.js 16 running on 64bit Amazon Linux 2
+  default_region: us-east-1
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: null
+  repository: null
+  sc: git
+  workspace_type: Application
