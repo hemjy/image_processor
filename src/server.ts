@@ -1,6 +1,6 @@
 
 import dotenv from 'dotenv';
-import express from 'express';
+import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL, deleteLocalFiles} from './util/util';
 import { requireAuth } from './routes/auth';
@@ -34,20 +34,20 @@ import { requireAuth } from './routes/auth';
   /**************************************************************************** */
 
   //! END @TODO1
-  app.get( "/filteredimage", requireAuth, async ( req, res ) => {
+  app.get( "/filteredimage", requireAuth, async ( req: Request, res: Response ) => {
     
     try 
     {
-    const {image_url} = req.query;
+    const {image_url}: {image_url: string} = req.query;
     if(!image_url) return res.status(400).send("Image url is required");
-    const image = await filterImageFromURL(image_url);
+    const image: string = await filterImageFromURL(image_url);
     if(!image) return res.status(404).send("Image not found");
 
-      res.sendFile(image, async () =>
+      res.status(200).sendFile(image, async () =>
     {
       await deleteLocalFiles([image]);
     });
-    
+
     } catch (error) {
       return res.status(500).send(`Internal server error error:${error}`);
     }
@@ -57,7 +57,7 @@ import { requireAuth } from './routes/auth';
   
   // Root Endpoint
   // Displays a simple message to the user
-  app.get( "/", async ( req, res ) => {
+  app.get( "/", async ( req: Request, res: Response ) => {
     res.send("Welcome to Abdulmujib image processor")
   } );
   
