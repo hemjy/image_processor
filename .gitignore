@@ -34,4 +34,5 @@ Thumbs.db
 UserInterfaceState.xcuserstate
 node_modules
 venv/
+env/
 
